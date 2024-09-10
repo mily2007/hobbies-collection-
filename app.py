@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import requests
 
 app = Flask(__name__)
@@ -20,6 +20,11 @@ def index():
         livros = []
 
     return render_template('index.html', livros=livros)
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    requests.delete(f'{API_URL}/{id}')
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(port=5001, debug=True)
